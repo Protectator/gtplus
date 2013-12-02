@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name           GT+
 // @namespace      Protectator, Flagoul
-// @description    Ajoute des raccourcis dans la barre du bas ainsi qu'un lien Tools4TW a coté des liens
+// @description    Ajoute des raccourcis dans la barre du bas ainsi qu'un lien Tools4TW a coté des liens. Affiche aussi sur la vue générale du village les troupes en production.
 // @include        *.guerretribale.fr/*
 // ==/UserScript==
 
@@ -273,12 +273,17 @@ $j('.btn-recruit, .btn-cancel').on('click', function () {
 */
 
 // en attendant
-$j('.btn-recruit, .btn-cancel').on('click', function () { // bug avec .btn-cancel: marche comme ça, mais pas en userscript
-	setTimeout(function() {
-		storeValues();
-	}, 400);
 
+var waitDelay = 1000;
+
+$j('.btn-recruit').on('click', function () {
+	setTimeout(function () {
+		storeValues();
+		$j('.btn-cancel').prop('onclick', null);
+	}, waitDelay);
 });
+
+$j('.btn-cancel').prop('onclick', null);
 
 // crée l'array qui contient les unités et les temps en fonction du bâtiment
 function addTrainingArray(name) {
