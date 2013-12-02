@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           GT+
-// @namespace      Protectator
+// @namespace      Protectator, Flagoul
 // @description    Ajoute des raccourcis dans la barre du bas ainsi qu'un lien Tools4TW a coté des liens
 // @include        *.guerretribale.fr/*
 // ==/UserScript==
