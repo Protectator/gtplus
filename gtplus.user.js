@@ -28,7 +28,7 @@ $j = jQuery.noConflict();
 // localStorage prefix
 var lsPrefix = "gtplusLocalStorage";
 
-jQuery(document).ready(function() {
+$j(function() {
 
 // css
 var css = document.createElement("style");
@@ -248,11 +248,27 @@ document.getElementById('linkContainer').innerHTML += html;
 storeValues();
 displayTraining();
 
-$j('.btn-recruit, .btn-cancel').click(function () {
-	storeValues();
-	console.log("clicked");
-});
+// todo
+// prend la fonction utilisée pour submit qu'une unité a été recrutée ou anulée et ajoute storeValue() quand on reçoit la réponse du serveur
+var _GTP_submitFun = TrainOverview.submitOrder+"";
+_GTP_submitFun = _GTP_addCallback(_GTP_submitFun, "storeValues()");
 
+function _GTP_addCallback(strFun, callback) {
+  callback = ";"+callback+";"
+  strFun = strFun.replace(/^function(.*)/, "function _GTP_submitOrder$1")
+  strFun = strFun.replace(/(.*\$\.post.*)(},\s*'json'\).*)/, "$1 "+callback+" $2")
+  strFun = strFun.replace(/(.*\$\.post.*function\s*\(data\)\s*{)(.*)/, "$1 "+callback+" $2")
+
+  return strFun;
+}
+
+$(".btn-recruit, .btn-cancel").on('click', function () {
+  eval(_GTP_submitFun)
+  _GTP_submitOrder()
+  console.log(_GTP_submitFun)
+
+  return false
+});
 
 // crée l'array qui contient les unités et les temps en fonction du bâtiment
 function addTrainingArray(name) {
@@ -276,8 +292,10 @@ function addTrainingArray(name) {
 	}
 	
 	if(address.indexOf(name) != -1){ // si on est dans le batiment
-		if(toAdd[0].unit == "" && localStorage[lsPrefix+name] !== undefined){
-			localStorage.removeItem(lsPrefix+name);
+		if(toAdd[0].unit == ""){
+			if(localStorage[lsPrefix+name] !== undefined) {
+				localStorage.removeItem(lsPrefix+name);
+			}
 		}
 		else {
 			localStorage[lsPrefix+name] = JSON.stringify(toAdd);
