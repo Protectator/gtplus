@@ -25,6 +25,9 @@ var id_joueur = "962075";
 
 $j = jQuery.noConflict();
 
+// localStorage prefix
+var lsPrefix = "gtplusLocalStorage";
+
 jQuery(document).ready(function() {
 
 // css
@@ -241,34 +244,12 @@ for (i = 0; i < len; i++) {
 }
 
 document.getElementById('linkContainer').innerHTML += html;
-
 // temps de recrutement
-var lsPrefix = "gtplusLocalStorage";
-var first_unit = $j('.trainqueue_wrap .lit td:nth-child(1)').text();
-var first_time = $j('.trainqueue_wrap .lit td:nth-child(3)').text();
+addTrainingArray("barracks");
+addTrainingArray("stable");
+addTrainingArray("garage");
 
-var queue_units = $j('.trainqueue_wrap .sortable_row td:even:even').map(function() {
-	return $j(this).text();
-}).get();
-var queue_times = $j('.trainqueue_wrap .sortable_row td:even:odd').map(function() {
-	return $j(this).text();
-}).get();
-
-queue_units.unshift(first_unit);
-queue_times.unshift(first_time);
-
-if(queue_units[0] != ""){
-	localStorage[lsPrefix+"training_units"] = JSON.stringify(queue_units);
-	localStorage[lsPrefix+"training_times"] = JSON.stringify(queue_times);
-}
-
-var content = "";
-
-if(localStorage[lsPrefix+"training_units"] !== undefined) {
-	for(var i=0; i< JSON.parse(localStorage[lsPrefix+"training_units"]).length; ++i) {
-		content += "<tr><td>" + JSON.parse(localStorage[lsPrefix+"training_units"])[i] + ": " + JSON.parse(localStorage[lsPrefix+"training_times"])[i] + "</td></tr>";
-	}
-}
+var content = makeContent();
 	
 $j('#rightcolumn').append(
 '<div id="show_training" class="vis moveable widget">'+
@@ -286,6 +267,52 @@ $j('#rightcolumn').append(
 	'</div>'+
 '</div>'
 );
-
 });
+
+// crée l'array qui contient les unités et les temps en fonction du bâtiment
+function addTrainingArray(name) {
+	var first_unit = $j('#trainqueue_wrap_'+name+' .lit td:nth-child(1)').text();
+	var first_time = $j('#trainqueue_wrap_'+name+' .lit td:nth-child(3)').text();
+
+	var queue_units = $j('#trainqueue_wrap_'+name+' .sortable_row td:even:even').map(function() {
+		return $j(this).text();
+	}).get();
+	var queue_times = $j('#trainqueue_wrap_'+name+' .sortable_row td:even:odd').map(function() {
+		return $j(this).text();
+	}).get();
+	
+	queue_units.unshift(first_unit);
+	queue_times.unshift(first_time);
+
+	var toAdd = new Array();
+	
+	for(var i=0; i<queue_units.length; ++i) {
+		toAdd.push({"unit": queue_units[i], "time": queue_times[i]});
+	}
+	
+	if(queue_units[0] != ""){
+		localStorage[lsPrefix+name] = JSON.stringify(toAdd);
+	}
+}
+
+function getTrainingString(name) {
+	var string = "";
+	if(localStorage[lsPrefix+name] !== undefined) {
+	var array = JSON.parse(localStorage[lsPrefix+name]);
+		for(var i = 0; i<array.length; ++i){
+			string += "<tr><td>" + array[i].unit + ": " + array[i].time + "</td></tr>";
+		}
+	}
+	return string;
+}
+
+function makeContent () {
+	var content = "";
+	
+	content += getTrainingString("barracks");
+	content += getTrainingString("stable");
+	content += getTrainingString("garage");
+
+	return content;
+}
 
