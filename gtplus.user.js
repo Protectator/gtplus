@@ -248,8 +248,9 @@ document.getElementById('linkContainer').innerHTML += html;
 storeValues();
 displayTraining();
 
-// todo
-// prend la fonction utilisée pour submit qu'une unité a été recrutée ou anulée et ajoute storeValue() quand on reçoit la réponse du serveur
+// todo : marche mais TrainOverview n'est pas accessible
+// prend la fonction utilisée pour submit qu'une unité a été recrutée ou anulée et ajoute storeValue() qui s'execute on reçoit la réponse du serveur
+/*
 var _GTP_submitFun = TrainOverview.submitOrder+"";
 _GTP_submitFun = _GTP_addCallback(_GTP_submitFun, "storeValues()");
 
@@ -262,12 +263,21 @@ function _GTP_addCallback(strFun, callback) {
   return strFun;
 }
 
-$(".btn-recruit, .btn-cancel").on('click', function () {
+$j('.btn-recruit, .btn-cancel').on('click', function () {
   eval(_GTP_submitFun)
   _GTP_submitOrder()
   console.log(_GTP_submitFun)
 
   return false
+});
+*/
+
+// en attendant
+$j('.btn-recruit, .btn-cancel').on('click', function () { // bug avec .btn-cancel: marche comme ça, mais pas en userscript
+	setTimeout(function() {
+		storeValues();
+	}, 400);
+
 });
 
 // crée l'array qui contient les unités et les temps en fonction du bâtiment
@@ -304,7 +314,7 @@ function addTrainingArray(name) {
 }
 
 function storeValues() {
-	console.log("stored");
+	console.log("Saved values.");
 	addTrainingArray("barracks");
 	addTrainingArray("stable");
 	addTrainingArray("garage");
