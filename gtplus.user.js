@@ -44,13 +44,13 @@ function insertAfter(referenceNode, newNode) {
 }
 
 // barre raccourcis
-var adresse = document.location.href;
-var serv = adresse.substring(0, 11);
+var address = document.location.href;
+var serv = address.substring(0, 11);
 
-var numero = serv.substring(9, 11);
+var number = serv.substring(9, 11);
 
 var tools4tw = "http://fr.tools4tribalwars.com/tribalwars-detail_joueur.village-";
-var num_village = adresse.substr(46, adresse.indexOf("&", 0)-46);
+var num_village = address.substr(46, address.indexOf("&", 0)-46);
 tools4tw += num_village;
 tools4tw += ".html";
 
@@ -87,21 +87,21 @@ var pattviid = /id=(\d+)&screen=info_village/;
 var pattovid = /village=(\d+)&screen=overview/;
 
 // map sur Page profil
-if (patt.test(adresse)){
+if (patt.test(address)){
 	var tablecarte = document.createElement("table");
 	var codehtml = "<thead><tr><th>Carte villages</th></tr></thead><tbody><tr><td width=\"322\" height=\"365\" style = \" background: url('";
 	var titre = document.getElementsByTagName('title')[0].innerHTML;
 	var limite = titre.indexOf("|", 0);
 	var x = titre.substr(limite-3, 3);
 	var y = titre.substr(limite+1, 3);
-	var image = "http://fr.tools4tribalwars.com/images_png/graph_map2_fr_"; image += numero; image +="_322_";
+	var image = "http://fr.tools4tribalwars.com/images_png/graph_map2_fr_"; image += number; image +="_322_";
 	image += x;
 	image += "_";
 	image += y;
 	image += "_4_0_1_1_1__TR1-32_TC1-5_JO7-";
 	image += id_joueur;
 	image += "_JC7-210_JO1-";
-	image += pattid.exec(adresse)[1];
+	image += pattid.exec(address)[1];
 	image += "_JC1-60";
 	image += ".png";
 	
@@ -120,13 +120,13 @@ for (i = 0; i < len; i++) {
 		var link_tools = pattid.exec(link);
 		link_ok = link_tools[1];
 		var link_final = "http://fr.tools4tribalwars.com/tribalwars-detail_joueur.monde-";
-		link_final += numero;
+		link_final += number;
 		link_final += ".joueur-";
 		link_final += link_ok;
 		link_final += ".html";
 		var el = document.createElement("a");
 		var image = "http://fr.twstats.com/fr";
-		image += numero;
+		image += number;
 		image += "/image.php?type=playergraph&graph=points&id=";
 		image += link_ok;
 		el.href = link_final;
@@ -145,11 +145,11 @@ for (i = 0; i < len; i++) {
 		var link_final = "http://fr.tools4tribalwars.com/tribalwars-detail_tribu.tribu-";
 		link_final += link_ok;
 		link_final += ".monde-";
-		link_final += numero;
+		link_final += number;
 		link_final += ".html";
 		var el = document.createElement("a");
 		var image = "http://fr.twstats.com/fr";
-		image += numero;
+		image += number;
 		image += "/image.php?type=tribegraph&graph=points&id=";
 		image += link_ok;
 		el.href = link_final;
@@ -162,7 +162,7 @@ for (i = 0; i < len; i++) {
 		insertAfter(links.item(i), el);
 	}
 	
-	linkimg = "http://fr.tools4tribalwars.com/images_png/graph_map2_fr_"; image += numero; image +="_250_563_527_5_0_1_1_0__TR1-32_TC1-5_JO7-962075_JC7-210.png";
+	linkimg = "http://fr.tools4tribalwars.com/images_png/graph_map2_fr_"; image += number; image +="_250_563_527_5_0_1_1_0__TR1-32_TC1-5_JO7-962075_JC7-210.png";
 	
 	if (pattvi.test(link)) {
 		var link_tools = pattviid.exec(link);
@@ -170,7 +170,7 @@ for (i = 0; i < len; i++) {
 		var link_final = "http://fr.tools4tribalwars.com/tribalwars-detail_village.village-";
 		link_final += link_ok;
 		link_final += ".monde-";
-		link_final += numero;
+		link_final += number;
 		link_final += ".html";
 		var el = document.createElement("a");
 		
@@ -187,7 +187,7 @@ for (i = 0; i < len; i++) {
 		}
 		
 		var image = "http://fr.tools4tribalwars.com/images_png/graph_map2_fr_";
-		image += numero;
+		image += number;
 		image +="_200_";
 		image += x;
 		image += "_";
@@ -213,7 +213,7 @@ for (i = 0; i < len; i++) {
 			var link_final = "http://fr.tools4tribalwars.com/tribalwars-detail_village.village-";
 			link_final += link_ok;
 			link_final += ".monde-";
-			link_final += numero;
+			link_final += number;
 			link_final += ".html";
 			var el = document.createElement("a");
 			
@@ -222,7 +222,7 @@ for (i = 0; i < len; i++) {
 			var x = contenu.substr(limite-3, 3);
 			var y = contenu.substr(limite+1, 3);
 			
-			var image = "http://fr.tools4tribalwars.com/images_png/graph_map2_fr_"; image += numero; image +="_200_";
+			var image = "http://fr.tools4tribalwars.com/images_png/graph_map2_fr_"; image += number; image +="_200_";
 			image += x;
 			image += "_";
 			image += y
@@ -242,32 +242,17 @@ for (i = 0; i < len; i++) {
 	}
 	
 }
-
 document.getElementById('linkContainer').innerHTML += html;
-// temps de recrutement
-addTrainingArray("barracks");
-addTrainingArray("stable");
-addTrainingArray("garage");
 
-var content = makeContent();
-	
-$j('#rightcolumn').append(
-'<div id="show_training" class="vis moveable widget">'+
-	'<h4 class="head">'+
-		'<img style="float: right; cursor: pointer;" onclick="return VillageOverview.toggleWidget( \'show_training\', this );" src="graphic/minus.png"> Recrutement des troupes'+
-	'</h4>'+
-	'<div class="widget_content" style="display: block;">'+
-		'<table class="vis" width="100%">'+
-			'<tbody>'+
-				'<tr>'+
-					content +
-				'</tr>'+
-			'</tbody>'+
-		'</table>'+
-	'</div>'+
-'</div>'
-);
+// temps de recrutement
+storeValues();
+displayTraining();
+
+$j('.btn-recruit, .btn-cancel').click(function () {
+	storeValues();
+	console.log("clicked");
 });
+
 
 // crée l'array qui contient les unités et les temps en fonction du bâtiment
 function addTrainingArray(name) {
@@ -290,9 +275,21 @@ function addTrainingArray(name) {
 		toAdd.push({"unit": queue_units[i], "time": queue_times[i]});
 	}
 	
-	if(queue_units[0] != ""){
-		localStorage[lsPrefix+name] = JSON.stringify(toAdd);
+	if(address.indexOf(name) != -1){ // si on est dans le batiment
+		if(toAdd[0].unit == "" && localStorage[lsPrefix+name] !== undefined){
+			localStorage.removeItem(lsPrefix+name);
+		}
+		else {
+			localStorage[lsPrefix+name] = JSON.stringify(toAdd);
+		}
 	}
+}
+
+function storeValues() {
+	console.log("stored");
+	addTrainingArray("barracks");
+	addTrainingArray("stable");
+	addTrainingArray("garage");
 }
 
 function getTrainingString(name) {
@@ -306,13 +303,25 @@ function getTrainingString(name) {
 	return string;
 }
 
-function makeContent () {
-	var content = "";
+function displayTraining() {
+	var content = getTrainingString("barracks") + getTrainingString("stable") + getTrainingString("garage");
 	
-	content += getTrainingString("barracks");
-	content += getTrainingString("stable");
-	content += getTrainingString("garage");
-
-	return content;
+	$j('#rightcolumn').append(
+	'<div id="show_training" class="vis moveable widget">'+
+		'<h4 class="head">'+
+			'<img style="float: right; cursor: pointer;" onclick="return VillageOverview.toggleWidget( \'show_training\', this );" src="graphic/minus.png"> Recrutement des troupes'+
+		'</h4>'+
+		'<div class="widget_content" style="display: block;">'+
+			'<table class="vis" width="100%">'+
+				'<tbody>'+
+					'<tr>'+
+						content +
+					'</tr>'+
+				'</tbody>'+
+			'</table>'+
+		'</div>'+
+	'</div>'
+	);
 }
+});
 
