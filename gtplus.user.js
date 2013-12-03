@@ -274,16 +274,19 @@ $j('.btn-recruit, .btn-cancel').on('click', function () {
 
 // en attendant
 
-var waitDelay = 1000;
+if(address.indexOf("barracks") != -1 || address.indexOf("stable") != -1 || address.indexOf("garage") != -1) {
+	console.log("fnu");
+	var waitDelay = 1000;
 
-$j('.btn-recruit').on('click', function () {
-	setTimeout(function () {
-		storeValues();
-		$j('.btn-cancel').prop('onclick', null);
-	}, waitDelay);
-});
+	$j('.btn-recruit').on('click', function () {
+		setTimeout(function () {
+			storeValues();
+			$j('.btn-cancel').prop('onclick', null);
+		}, waitDelay);
+	});
 
-$j('.btn-cancel').prop('onclick', null);
+	$j('.btn-cancel').prop('onclick', null);
+}
 
 // crée l'array qui contient les unités et les temps en fonction du bâtiment
 function addTrainingArray(name) {
