@@ -248,32 +248,6 @@ document.getElementById('linkContainer').innerHTML += html;
 storeValues();
 displayTraining();
 
-// todo : marche mais TrainOverview n'est pas accessible
-// prend la fonction utilisée pour submit qu'une unité a été recrutée ou anulée et ajoute storeValue() qui s'execute on reçoit la réponse du serveur
-/*
-var _GTP_submitFun = TrainOverview.submitOrder+"";
-_GTP_submitFun = _GTP_addCallback(_GTP_submitFun, "storeValues()");
-
-function _GTP_addCallback(strFun, callback) {
-  callback = ";"+callback+";"
-  strFun = strFun.replace(/^function(.*)/, "function _GTP_submitOrder$1")
-  strFun = strFun.replace(/(.*\$\.post.*)(},\s*'json'\).*)/, "$1 "+callback+" $2")
-  strFun = strFun.replace(/(.*\$\.post.*function\s*\(data\)\s*{)(.*)/, "$1 "+callback+" $2")
-
-  return strFun;
-}
-
-$j('.btn-recruit, .btn-cancel').on('click', function () {
-  eval(_GTP_submitFun)
-  _GTP_submitOrder()
-  console.log(_GTP_submitFun)
-
-  return false
-});
-*/
-
-// en attendant
-
 if(address.indexOf("barracks") != -1 || address.indexOf("stable") != -1 || address.indexOf("garage") != -1) {
 	console.log("fnu");
 	var waitDelay = 1000;
@@ -329,13 +303,14 @@ function storeValues() {
 }
 
 function getTrainingString(name) {
-	var string = "";
+	var string = '<div id="gtplus'+name+'"><table class="vis" width="100%"><tbody>';
 	if(localStorage[lsPrefix+name] !== undefined) {
 	var array = JSON.parse(localStorage[lsPrefix+name]);
 		for(var i = 0; i<array.length; ++i){
-			string += "<tr><td>" + array[i].unit + ": " + array[i].time + "</td></tr>";
+			string += '<tr><td>' + array[i].unit + ': ' + array[i].time + '</td></tr>';
 		}
 	}
+	string += '</tbody></table></div>';
 	return string;
 }
 
@@ -348,13 +323,7 @@ function displayTraining() {
 			'<img style="float: right; cursor: pointer;" onclick="return VillageOverview.toggleWidget( \'show_training\', this );" src="graphic/minus.png"> Recrutement des troupes'+
 		'</h4>'+
 		'<div class="widget_content" style="display: block;">'+
-			'<table class="vis" width="100%">'+
-				'<tbody>'+
-					'<tr>'+
-						content +
-					'</tr>'+
-				'</tbody>'+
-			'</table>'+
+			content +
 		'</div>'+
 	'</div>'
 	);
