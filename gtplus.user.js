@@ -303,7 +303,13 @@ function storeValues() {
 }
 
 function getTrainingString(name) {
-	var string = '<div id="gtplus'+name+'"><table class="vis" width="100%"><tbody>';
+
+	var nameDisplayed = name;
+	if(name === "barracks") nameDisplayed = "Caserne";
+	else if(name === "stable") nameDisplayed = "Ecurie";
+	else if(name === "garage") nameDisplayed = "Atelier";
+	
+	var string = '<div id="gtplus'+name+'" align="center"><b>'+nameDisplayed+'</b><table class="vis" width="100%"><tbody>';
 	if(localStorage[lsPrefix+name] !== undefined) {
 	var array = JSON.parse(localStorage[lsPrefix+name]);
 		for(var i = 0; i<array.length; ++i){
