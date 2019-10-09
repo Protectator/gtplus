@@ -1,7 +1,7 @@
 GTPlus
 ======
 
-GTPlus is a userscript for guerretribale.fr adding some informations on a few pages.
+GTPlus is a userscript for guerretribale.fr adding some information on a few pages.
 - Adds shortcut links in the bottom
 - Displays trained units, if there are, in the village overwiew. Refreshes the units of the list relative to each building when you visit it.
 
